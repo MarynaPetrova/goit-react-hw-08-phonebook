@@ -9,8 +9,8 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleChange = evt => {
-    const { name, value } = evt.target;
+  const handleChange = (event) => {
+    const { name, value } = event.target;
     switch (name) {
       case 'email':
         setEmail(value);
@@ -23,11 +23,12 @@ const Login = () => {
     }
   };
 
-  const handleOnSubmit = event => {
+  const handleOnSubmit = (event) => {
     event.preventDefault();
     setError('');
 
-    dispatch(loginThunk({ email, password }))
+    const formData = { email, password };
+    dispatch(loginThunk(formData))
       .unwrap()
       .then(() => {
         // Handle successful login here (e.g., redirect)
@@ -37,7 +38,7 @@ const Login = () => {
 
   return (
     <Container>
-      <Form onSubmit={handleOnSubmit}>
+      <Form onSubmit={handleOnSubmit} onChange={handleChange}>
         {error && <div className="alert alert-danger">{error}</div>}
         {/* Email and password fields here */}
         <Button bg="black" variant="dark" type="submit">Log in</Button>
